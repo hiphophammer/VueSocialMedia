@@ -1,8 +1,9 @@
 <template>
-  <div class="black-bg" v-if="showModal == true">
+  <div class="black-bg" v-if="modalNumber > -1">
     <div class="white-bg">
-      <h4>상세페이지임</h4>
-      <p>상세페이지 내용임</p>
+      <h4>{{ rooms[modalNumber].title }}</h4>
+      <p>{{ rooms[modalNumber].content }}</p>
+      <button @click="modalNumber = -1">닫기</button>
     </div>
   </div>
 
@@ -10,60 +11,31 @@
     <a v-for="(a, i) in menus" :key="i">{{ menus[i] }}</a>
   </div>
 
-  <div>
-    <img src="/room0.jpg" class="image" />
-    <h4 :style="style" @click="showModal = !showModal">{{ products[0] }}</h4>
-    <p>50 만원</p>
-    <button
+  <div v-for="(room, i) in rooms" :key="room">
+    <img :src="room.image" class="image" />
+    <h4
       @click="
         () => {
-          increase(0);
+          modalNumber = i;
         }
       "
     >
-      허위매물신고</button
-    ><span>신고 수 : {{ reports[0] }}</span>
-  </div>
-  <div>
-    <img src="/room1.jpg" class="image" />
-    <h4 :style="style">{{ products[1] }}</h4>
-    <p>60 만원</p>
-    <button
-      @click="
-        () => {
-          increase(1);
-        }
-      "
-    >
-      허위매물신고</button
-    ><span>신고 수 : {{ reports[1] }}</span>
-  </div>
-  <div>
-    <img src="/room2.jpg" class="image" />
-    <h4 :style="style">{{ products[2] }}</h4>
-    <p>70 만원</p>
-    <button
-      @click="
-        () => {
-          increase(2);
-        }
-      "
-    >
-      허위매물신고</button
-    ><span>신고 수 : {{ reports[2] }}</span>
+      {{ room.title }}
+    </h4>
+    <p>{{ room.price + " 원" }}</p>
   </div>
 </template>
 
 <script>
+import list from "./assets/data.js";
+
 export default {
   name: "App",
   data() {
     return {
-      showModal: false,
+      modalNumber: -1,
+      rooms: list,
       menus: ["Home", "Products", "About"],
-      products: ["역삼동원룸", "천호동원룸", "마포구원룸"],
-      prices: [50, 60, 70],
-      reports: [0, 0, 0],
     };
   },
   methods: {
