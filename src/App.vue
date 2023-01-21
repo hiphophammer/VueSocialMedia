@@ -11,6 +11,8 @@
     <a v-for="(a, i) in menus" :key="i">{{ menus[i] }}</a>
   </div>
 
+  <DiscountPage />
+
   <div v-for="(room, i) in rooms" :key="room">
     <img :src="room.image" class="image" />
     <h4
@@ -28,6 +30,7 @@
 
 <script>
 import list from "./assets/data.js";
+import DiscountPage from "./DiscountPage.vue";
 
 export default {
   name: "App",
@@ -43,7 +46,9 @@ export default {
       this.reports[i]++;
     },
   },
-  components: {},
+  components: {
+    DiscountPage: DiscountPage,
+  },
 };
 </script>
 
@@ -69,6 +74,7 @@ body {
   width: 100%;
   background: white;
   border-radius: 8px;
+  margin: 10px;
   padding: 25px;
 }
 
