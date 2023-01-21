@@ -1,16 +1,9 @@
 <template>
-  <div class="black-bg" v-if="modalNumber > -1">
-    <div class="white-bg">
-      <h4>{{ rooms[modalNumber].title }}</h4>
-      <p>{{ rooms[modalNumber].content }}</p>
-      <button @click="modalNumber = -1">닫기</button>
-    </div>
-  </div>
-
   <div class="menu">
     <a v-for="(a, i) in menus" :key="i">{{ menus[i] }}</a>
   </div>
 
+  <ModalComp />
   <DiscountPage />
 
   <div v-for="(room, i) in rooms" :key="room">
@@ -31,6 +24,7 @@
 <script>
 import list from "./assets/data.js";
 import DiscountPage from "./DiscountPage.vue";
+import ModalComp from "./ModalComp.vue";
 
 export default {
   name: "App",
@@ -48,6 +42,7 @@ export default {
   },
   components: {
     DiscountPage: DiscountPage,
+    ModalComp: ModalComp,
   },
 };
 </script>
@@ -62,20 +57,6 @@ export default {
 }
 body {
   margin: 0;
-}
-.black-bg {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  padding: 20px;
-}
-.white-bg {
-  width: 100%;
-  background: white;
-  border-radius: 8px;
-  margin: 10px;
-  padding: 25px;
 }
 
 .menu {
