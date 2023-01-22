@@ -3,7 +3,7 @@
     <div class="white-bg">
       <h4>{{ rooms[index].title }}</h4>
       <p>{{ rooms[index].content }}</p>
-      <!-- <button @click="index = -1">닫기</button> -->
+      <button @click="$emit('closeButton')">닫기</button>
     </div>
   </div>
 </template>

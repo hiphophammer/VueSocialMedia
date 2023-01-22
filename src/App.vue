@@ -3,9 +3,13 @@
     <a v-for="(a, i) in menus" :key="i">{{ menus[i] }}</a>
   </div>
   <DiscountPage />
-  <ModalComp :rooms="rooms" :index="modalNumber" />
+  <ModalComp
+    @closeButton="modalNumber = -1"
+    :rooms="rooms"
+    :index="modalNumber"
+  />
   <div v-for="room in rooms" :key="room.id">
-    <RoomCell :room="room" />
+    <RoomCell @openModal="modalNumber = $event" :room="room" />
   </div>
 </template>
 
