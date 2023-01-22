@@ -1,9 +1,9 @@
 <template>
-  <div class="black-bg" v-if="modalNumber > -1">
+  <div class="black-bg" v-if="index > -1">
     <div class="white-bg">
-      <h4>{{ rooms[modalNumber].title }}</h4>
-      <p>{{ rooms[modalNumber].content }}</p>
-      <button @click="modalNumber = -1">닫기</button>
+      <h4>{{ rooms[index].title }}</h4>
+      <p>{{ rooms[index].content }}</p>
+      <!-- <button @click="index = -1">닫기</button> -->
     </div>
   </div>
 </template>
@@ -11,6 +11,10 @@
 <script>
 export default {
   name: "ModalComp",
+  props: {
+    rooms: Array,
+    index: Number,
+  },
 };
 </script>
 

@@ -2,22 +2,10 @@
   <div class="menu">
     <a v-for="(a, i) in menus" :key="i">{{ menus[i] }}</a>
   </div>
-
-  <ModalComp />
   <DiscountPage />
-
-  <div v-for="(room, i) in rooms" :key="room">
-    <img :src="room.image" class="image" />
-    <h4
-      @click="
-        () => {
-          modalNumber = i;
-        }
-      "
-    >
-      {{ room.title }}
-    </h4>
-    <p>{{ room.price + " 원" }}</p>
+  <ModalComp :rooms="rooms" :index="modalNumber" />
+  <div v-for="room in rooms" :key="room.id">
+    <RoomCell :room="room" />
   </div>
 </template>
 
@@ -25,6 +13,7 @@
 import list from "./assets/data.js";
 import DiscountPage from "./DiscountPage.vue";
 import ModalComp from "./ModalComp.vue";
+import RoomCell from "./Room.vue";
 
 export default {
   name: "App",
@@ -43,6 +32,7 @@ export default {
   components: {
     DiscountPage: DiscountPage,
     ModalComp: ModalComp,
+    RoomCell: RoomCell,
   },
 };
 </script>
@@ -67,9 +57,5 @@ body {
 .menu a {
   color: white;
   padding: 10px;
-}
-.image {
-  width: 30rem;
-  height: 15rem;
 }
 </style>
