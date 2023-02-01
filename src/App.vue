@@ -1,19 +1,27 @@
 <template>
   <div class="header">
-    <ul class="header-button-left">
+    <ul class="header-button-left" @click="tabState = 0">
       <li>Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li @click="tabState++" v-if="tabState == 1">Next</li>
+      <li v-if="step == 2" @click="publish()">Publish</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <ContentContainer />
+  <ContentContainer :posts="posts" :tabState="tabState" :imageUrl="imageUrl" />
+  <button @click="loadContent">더 불러오기</button>
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
+      <input
+        @change="handleUpload"
+        accept="image/*"
+        type="file"
+        id="file"
+        class="inputfile"
+      />
       <label for="file" class="input-plus">+</label>
     </ul>
   </div>
@@ -21,11 +29,43 @@
 
 <script>
 import ContentContainer from "./components/ContentContainer.vue";
+import PostData from "./assets/data.json";
+import axios from "axios";
 
 export default {
   name: "App",
+  data() {
+    return {
+      tabState: 0,
+      imageUrl: "",
+      posts: PostData,
+    };
+  },
   components: {
     ContentContainer: ContentContainer,
+  },
+  methods: {
+    handleUpload(e) {
+      let files = e.target.files;
+      let url = URL.createObjectURL(files[0]);
+      console.log(url);
+      this.imageUrl = url;
+      this.tabState = 1;
+    },
+    loadContent() {
+      axios
+        .get(
+          this.posts.length == 3
+            ? "https://codingapple1.github.io/vue/more0.json"
+            : "https://codingapple1.github.io/vue/more1.json"
+        )
+        .then((res) => {
+          this.posts.push(res.data);
+        })
+        .catch((err) => {
+          alert(`Error fetching data!\n${err}`);
+        });
+    },
   },
 };
 </script>
