@@ -5,13 +5,18 @@
     </ul>
     <ul class="header-button-right">
       <li @click="tabState++" v-if="tabState == 1">Next</li>
-      <li v-if="step == 2" @click="publish()">Publish</li>
+      <li v-if="tabState == 2" @click="publish()">Done</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <ContentContainer :posts="posts" :tabState="tabState" :imageUrl="imageUrl" />
-  <button @click="loadContent">더 불러오기</button>
+  <ContentContainer
+    @write="newPost = $event"
+    :posts="posts"
+    :tabState="tabState"
+    :imageUrl="imageUrl"
+  />
+  <button v-if="tabState == 0" @click="loadContent">더 불러오기</button>
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -39,12 +44,27 @@ export default {
       tabState: 0,
       imageUrl: "",
       posts: PostData,
+      newPost: "",
     };
   },
   components: {
     ContentContainer: ContentContainer,
   },
   methods: {
+    publish() {
+      let newPost = {
+        name: "New User",
+        userImage: "https://placeimg.com/100/100/arch",
+        postImage: this.imageUrl,
+        likes: 36,
+        date: "May 15",
+        liked: false,
+        content: this.newPost,
+        filter: "perpetua",
+      };
+      this.posts.unshift(newPost);
+      this.tabState = 0;
+    },
     handleUpload(e) {
       let files = e.target.files;
       let url = URL.createObjectURL(files[0]);

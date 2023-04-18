@@ -24,7 +24,12 @@
         :style="{ backgroundImage: `url(${imageUrl})` }"
       ></div>
       <div class="write">
-        <textarea class="write-box">write!</textarea>
+        <textarea
+          @input="$emit('write', $event.target.value)"
+          class="write-box"
+        >
+Content</textarea
+        >
       </div>
     </div>
   </div>
